@@ -98,7 +98,7 @@
     rm: true
     image: "{{ eib_container_image }}"
     volumes:
-      - "{{ eib_path }}/metal3:/eib"
+      - "{{ eib_path }}/metal3:/eib:Z"
     detach: false
     state: started
     force_restart: no
@@ -247,7 +247,7 @@
     rm: true
     image: "{{ eib_container_image }}"
     volumes:
-      - "{{ eib_path }}/mgmt:/eib"
+      - "{{ eib_path }}/mgmt:/eib:Z"
     detach: false
     state: started
     force_restart: no
