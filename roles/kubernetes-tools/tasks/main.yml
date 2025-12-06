@@ -1,6 +1,6 @@
 ---
 - name: Install helm
-  become: yes
+  become: true
   unarchive:
     src: "{{ helm_download_archive }}"
     dest: /usr/local/bin/
@@ -14,14 +14,14 @@
   delay: 5
 
 - name: Install kubectl
-  become: yes
+  become: true
   get_url:
     url: "{{ kubectl_download_url }}"
     dest: /usr/local/bin
     mode: 0755
 
 - name: Install k9s
-  become: yes
+  become: true
   unarchive:
     src: "{{ k9s_download_archive }}"
     dest: /usr/local/bin/
@@ -33,7 +33,7 @@
   delay: 5
 
 - name: Install kustomize
-  become: yes
+  become: true
   unarchive:
     src: "{{ kustomize_download_archive }}"
     dest: /usr/local/bin/
@@ -46,7 +46,7 @@
 
 # per https://github.com/johanhaleby/kubetail#installation
 - name: Install kubetail
-  become: yes
+  become: true
   get_url:
     url: "{{ kubetail_download_url }}"
     dest: /usr/local/bin
@@ -54,7 +54,7 @@
 
 # see https://cluster-api.sigs.k8s.io/user/quick-start.html#install-clusterctl
 - name: Install clusterctl
-  become: yes
+  become: true
   get_url:
     url: "https://github.com/kubernetes-sigs/cluster-api/releases/download/{{ capi_core_version }}/clusterctl-linux-amd64"
     dest: /usr/local/bin/clusterctl

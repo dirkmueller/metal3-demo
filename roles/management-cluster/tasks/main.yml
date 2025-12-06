@@ -1,6 +1,6 @@
 ---
 - name: See if VM {{ vm_instance_name }} exists
-  become: yes
+  become: true
   community.libvirt.virt:
     command: list_vms
   register: list_vms_result
@@ -10,7 +10,7 @@
     msg: "Current defined VMs: {{ list_vms_result.list_vms }}"
 
 - name: Shutdown VM {{ vm_instance_name }}
-  become: yes
+  become: true
   community.libvirt.virt:
     name: "{{ vm_instance_name }}"
     state: destroyed
@@ -21,31 +21,31 @@
   changed_when: false
 
 - name: Detach OS disk from VM
-  become: yes
+  become: true
   command:
     cmd: virsh detach-disk {{ vm_instance_name }} --target sda --config
   ignore_errors: true
 
 - name: Detach Config disk from VM
-  become: yes
+  become: true
   command:
     cmd: virsh detach-disk {{ vm_instance_name }} --target sdb --config
   ignore_errors: true
 
 - name: Remove old disk image
-  become: yes
+  become: true
   file:
     path: "{{ disk_image_file }}"
     state: absent
 
 - name: Create a disk image from cloud image
-  become: yes
+  become: true
   shell: |
     qemu-img create -f qcow2 -F qcow2 -o backing_file={{ source_image_file }} {{ disk_image_file }}
     qemu-img resize {{ disk_image_file }} {{ disk_image_size }}
 
 - name: Attach OS disk to VM
-  become: yes
+  become: true
   command:
     cmd: virsh attach-disk {{ vm_instance_name }} --source {{ disk_image_file }} --targetbus scsi --target sda --type disk --subdriver qcow2 --config
   register: shell_result
@@ -55,7 +55,7 @@
     msg: "{{ shell_result }}"
 
 - name: Set boot to hd
-  become: yes
+  become: true
   command:
     cmd: virt-xml {{ vm_instance_name }} --edit  --boot hd
 
