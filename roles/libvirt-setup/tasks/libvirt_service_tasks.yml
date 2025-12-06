@@ -13,6 +13,7 @@
     - ansible.builtin.lineinfile:
         path: /etc/libvirt/qemu.conf
         line: 'security_driver = "none"'
+  register: security_driver_config
 
 - name: "Add the user {{ lookup('env','USER') }} to libvirt/kvm groups"
   become: true
@@ -20,12 +21,14 @@
     name: "{{ lookup('env','USER') }}"
     groups: libvirt,kvm
     append: true
+  register: user_groups_config
 
 - name: Restart libvirtd
   become: true
   ansible.builtin.service:
     name: libvirtd
     state: restarted
+  when: security_driver_config.changed or user_groups_config.changed
 
 - name: "Allow {{ lookup('env','USER') }} access to /var/run/libvirt/libvirt-sock"
   become: true
