@@ -19,7 +19,7 @@
   ansible.builtin.user:
     name: "{{ lookup('env','USER') }}"
     groups: libvirt,kvm
-    append: yes
+    append: true
 
 - name: Restart libvirtd
   become: true

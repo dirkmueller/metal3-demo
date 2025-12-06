@@ -7,7 +7,7 @@
     include: [linux-amd64/helm]
     owner: root
     group: root
-    remote_src: yes
+    remote_src: true
     extra_opts:
      - --strip-components=1
   retries: 5
@@ -28,7 +28,7 @@
     include: [k9s]
     owner: root
     group: root
-    remote_src: yes
+    remote_src: true
   retries: 5
   delay: 5
 
@@ -40,7 +40,7 @@
     include: [kustomize]
     owner: root
     group: root
-    remote_src: yes
+    remote_src: true
   retries: 5
   delay: 5
 
